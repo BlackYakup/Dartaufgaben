@@ -1,17 +1,33 @@
 import 'dart:io';
 
 void main(List<String> args) {
-  if (args.isEmpty) {
-    print("Bitte gib einen String als Argument an");
-    return;
+  String textToCompress = "";
+  String ergebnis = "";
+
+  if (args.isNotEmpty) {
+    textToCompress = args[0].trim();
   }
 
-  String input = args[0];
-  try {
-    print(compress(input));
-  }
-  catch(e) {
-    print("Fehler ${e.toString()}");
+  while (ergebnis.isEmpty) {
+    
+    if (textToCompress.isEmpty) {
+      stdout.write("Bitte gib einen Text zum Komprimieren ein: ");
+      textToCompress = (stdin.readLineSync() ?? "").trim();
+    }
+
+    if (textToCompress.isEmpty) {
+      print("Fehler: Die Eingabe darf nicht leer sein!");
+      continue; 
+    }
+
+    try {
+      ergebnis = compress(textToCompress);
+      print("Ergebnis: $ergebnis");
+    } catch (e) {
+      print("Fehler: ${e.toString()}");
+      
+      textToCompress = ""; 
+    }
   }
 }
 
@@ -20,7 +36,7 @@ void main(List<String> args) {
 String compress(String input) {
   if (input.isEmpty) return "";
 
-  if(!RegExp(r'^[a-zA-Z]+$').hasMatch(input)) {
+  if(!RegExp(r'^[a-zA-ZäöüÄÖÜß]+$').hasMatch(input)) {
     throw ArgumentError("String darf nur Buchstaben enthalten");
   }
 

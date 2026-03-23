@@ -1,28 +1,49 @@
 import 'dart:io';
 
 void main(List<String> args) {
-  if (args.isEmpty) {
-    print("Nutzung: dart decompress.dart {KOMPRIMIERTER_TEXT}");
-    return;
+  String input = "";
+
+  if (args.isNotEmpty) {
+    input = args[0].trim();
   }
 
-  String input = args[0];
-  print(decompress(input));
+  bool erfolgreich = false;
+
+  while (!erfolgreich) {
+    if (input.isEmpty) {
+      stdout.write("Bitte gib den komprimierten Text ein: ");
+      input = (stdin.readLineSync() ?? "").trim();
+    }
+
+    try {
+      String ergebnis = decompress(input);
+      print("Dekomprimiertes Ergebnis: $ergebnis");
+      
+      erfolgreich = true; 
+    } catch (e) {
+      print("Fehler: ${e.toString()}");
+      
+      input = ""; 
+    }
+  }
 }
 
 String decompress(String input) {
+  if (!input.contains(RegExp(r'[a-zA-ZäöüÄÖÜß]'))) {
+    throw ArgumentError("Ungültiger komprimierter String: Muss Buchstaben enthalten.");
+  }
+
   String result = "";
-  final regExp = RegExp(r'([a-zA-Z])(\d*)');
+  final regExp = RegExp(r'([a-zA-ZäöüÄÖÜß])(\d*)');
   final matches = regExp.allMatches(input);
 
-  for(final match in matches) {
+  for (final match in matches) {
     String char = match.group(1)!;
     String countStr = match.group(2)!;
 
-    if(countStr.isEmpty) {
+    if (countStr.isEmpty) {
       result += char;
-    }
-    else {
+    } else {
       int count = int.parse(countStr);
       result += char * count;
     }
