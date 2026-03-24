@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:convert';
 
 void main() {
   String vorname = "";
   while (vorname.isEmpty) {
     stdout.write("Wie lautet der Vorname? ");
-    String eingabe = (stdin.readLineSync() ?? "").trim();
+    String eingabe = utf8.decode(stdin.readLineSync()!.codeUnits).trim();
+
     if (eingabe.isEmpty) {
       print("Fehler: Das Feld darf nicht leer sein.");
     } else if (!RegExp(r'^[a-zA-ZäöüÄÖÜß\s\-]+$').hasMatch(eingabe)) {
@@ -17,7 +19,7 @@ void main() {
   String nachname = "";
   while (nachname.isEmpty) {
     stdout.write("Wie lautet der Nachname? ");
-    String eingabe = (stdin.readLineSync() ?? "").trim();
+    String eingabe = utf8.decode(stdin.readLineSync()!.codeUnits).trim();
     
     if (eingabe.isEmpty) {
       print("Fehler: Das Feld darf nicht leer sein.");

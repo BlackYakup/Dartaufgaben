@@ -1,4 +1,6 @@
+import 'dart:developer';
 import 'dart:io';
+import 'dart:convert';
 
 void main(List<String> args) {
   String input = "";
@@ -12,7 +14,7 @@ void main(List<String> args) {
   while (!erfolgreich) {
     if (input.isEmpty) {
       stdout.write("Bitte gib den komprimierten Text ein: ");
-      input = (stdin.readLineSync() ?? "").trim();
+      input = utf8.decode(stdin.readLineSync()!.codeUnits).trim();
     }
 
     try {
@@ -29,7 +31,7 @@ void main(List<String> args) {
 }
 
 String decompress(String input) {
-  if (!input.contains(RegExp(r'[a-zA-ZäöüÄÖÜß]'))) {
+  if (!input.contains(RegExp(r'[0-9a-zA-ZäöüÄÖÜß]'))) {
     throw ArgumentError("Ungültiger komprimierter String: Muss Buchstaben enthalten.");
   }
 
@@ -40,7 +42,7 @@ String decompress(String input) {
   for (final match in matches) {
     String char = match.group(1)!;
     String countStr = match.group(2)!;
-
+    log("${char}, ${matches}");
     if (countStr.isEmpty) {
       result += char;
     } else {
