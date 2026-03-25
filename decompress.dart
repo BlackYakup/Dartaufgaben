@@ -31,7 +31,7 @@ void main(List<String> args) {
 }
 
 String decompress(String input) {
-  if (!input.contains(RegExp(r'[0-9a-zA-ZäöüÄÖÜß]'))) {
+  if (!input.contains(RegExp(r'[a-zA-ZäöüÄÖÜß]'))) {
     throw ArgumentError("Ungültiger komprimierter String: Muss Buchstaben enthalten.");
   }
 

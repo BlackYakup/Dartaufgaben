@@ -34,9 +34,15 @@ void main() {
   while (alterZahl == null) {
     stdout.write("Wie alt bist du? ");
     String eingabe = (stdin.readLineSync() ?? "").trim();
-    alterZahl = int.tryParse(eingabe);
-    if (alterZahl == null) {
+
+    int? tempAlter = int.tryParse(eingabe);
+
+    if (tempAlter == null) {
       print("Fehler: Bitte gib dein Alter als Zahl ein.");
+    } else if (tempAlter < 0) {
+      print("Fehler: Das Alter darf nicht negativ sein.");
+    } else {
+      alterZahl = tempAlter;
     }
   }
 
@@ -48,10 +54,10 @@ void main() {
 
     if (eingabe == "mann" || eingabe == "m" || eingabe == "männlich" || eingabe == "maennlich") {
       geschlecht = "Mann";
-    } else if (eingabe == "frau" || eingabe == "f" || eingabe == "weiblich") {
+    } else if (eingabe == "frau" || eingabe == "w" || eingabe == "weiblich") {
       geschlecht = "Frau";
     } else {
-      print("Fehler: Bitte gib z. B. Mann, M, männlich, Frau, F oder weiblich ein.");
+      print("Fehler: Bitte gib z. B. Mann, M, männlich, Frau, w oder weiblich ein.");
     }
   }
   

@@ -1,11 +1,25 @@
+import 'dart:io';
 import 'dart:math';
 
 void main() {
   Random random = Random();
 
   List<int> wuerfe = [];
-  int maxWuerfe = 10;
+  int maxWuerfe = 0;
   int sechsZaehler = 0;
+
+  while (maxWuerfe <= 0) {
+    stdout.write("Wie oft soll maximal gewürfelt werden? ");
+    String eingabe = (stdin.readLineSync() ?? "").trim();
+
+    int? temp = int.tryParse(eingabe);
+
+    if (temp == null || temp <= 0) {
+      print("Fehler: Bitte gib eine Zahl größer als 0 ein.");
+    } else {
+      maxWuerfe = temp;
+    }
+  }
 
   for (int i = 0; i < maxWuerfe; i++) {
     int wurf = random.nextInt(6) + 1;
@@ -24,7 +38,7 @@ void main() {
   }
 
   if (wuerfe.length == maxWuerfe) {
-    print("Würfellimit erreicht (10 Würfe).");
+    print("Würfellimit erreicht ($maxWuerfe Würfe).");
   }
 
   print("\nAlle Würfe: $wuerfe");
