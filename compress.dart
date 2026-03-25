@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 
 void main(List<String> args) {
   String textToCompress = "";
@@ -12,14 +13,14 @@ void main(List<String> args) {
     
     if (textToCompress.isEmpty) {
       stdout.write("Bitte gib einen Text zum Komprimieren ein: ");
-      textToCompress = (stdin.readLineSync() ?? "").trim();
+      textToCompress = utf8.decode(stdin.readLineSync()!.codeUnits).trim();
     }
 
     if (textToCompress.isEmpty) {
       print("Fehler: Die Eingabe darf nicht leer sein!");
       continue; 
     }
-
+ 
     try {
       ergebnis = compress(textToCompress);
       print("Ergebnis: $ergebnis");

@@ -41,14 +41,17 @@ void main() {
   }
 
   String geschlecht = "";
-  while (geschlecht != "Mann" && geschlecht != "Frau") {
+
+  while (geschlecht.isEmpty) {
     stdout.write("Und das Geschlecht (Mann/Frau)? ");
-    String eingabe = (stdin.readLineSync() ?? "").trim();
-    
-    if (eingabe == "Mann" || eingabe == "Frau") {
-      geschlecht = eingabe;
+    String eingabe = utf8.decode(stdin.readLineSync()!.codeUnits).trim().toLowerCase();
+
+    if (eingabe == "mann" || eingabe == "m" || eingabe == "männlich" || eingabe == "maennlich") {
+      geschlecht = "Mann";
+    } else if (eingabe == "frau" || eingabe == "f" || eingabe == "weiblich") {
+      geschlecht = "Frau";
     } else {
-      print("Fehler: Bitte gib exakt 'Mann' oder 'Frau' ein.");
+      print("Fehler: Bitte gib z. B. Mann, M, männlich, Frau, F oder weiblich ein.");
     }
   }
   

@@ -8,7 +8,7 @@ void main() {
   int sechsZaehler = 0;
 
   for (int i = 0; i < maxWuerfe; i++) {
-    int wurf = random.nextInt(6) + 1; // 1–6
+    int wurf = random.nextInt(6) + 1;
     wuerfe.add(wurf);
 
     print("Wurf ${i + 1}: $wurf");
@@ -17,7 +17,7 @@ void main() {
       sechsZaehler++;
 
       if (sechsZaehler == 2) {
-        print("Zweimal eine 6 gewürfelt → Abbruch!");
+        print("Zweimal eine 6 gewürfelt!");
         break;
       }
     }
